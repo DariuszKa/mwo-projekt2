@@ -1,0 +1,105 @@
+package pl.edu.agh.ki.mwo.model;
+
+import pl.edu.agh.ki.mwo.persistence.UserDatabase;
+
+public class User {
+	private static int userIdGenerator = 1;
+	protected int id;
+	protected String login;
+	protected String firstName;
+	protected String lastName;
+	protected String sex;
+	protected String age;
+	protected String isPrelegent;
+	protected String isRecenzent;
+	protected String isAdmin;
+	protected String password;
+	
+	public User(String login, String firstName, String lastName, String sex, String age, String isPrelegent, String isRecenzent, String isAdmin, String password) {
+		if(UserDatabase.getInstance().hasUser(login)){
+			System.out.println("User '" + login + "' not created! User just exists in the database!");
+		}
+		else{
+			//super();
+			this.id = userIdGenerator;
+			userIdGenerator++;
+			this.login = login;
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.sex = sex;
+			this.age = age;
+			this.isPrelegent = isPrelegent;
+			this.isRecenzent = isRecenzent;
+			this.isAdmin = isAdmin;
+			this.password = password;
+		}
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	
+	public String getName() {
+		return firstName;
+	}
+	public void setName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getSurname() {
+		return lastName;
+	}
+	public void setSurname(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getIsPrelegent() {
+		return isPrelegent;
+	}
+	public void setIsPrelegent(String isPrelegent) {
+		this.isPrelegent = isPrelegent;
+	}
+	
+	public String getIsRecenzent() {
+		return isRecenzent;
+	}
+	public void setIsRecenzent(String isRecenzent) {
+		this.isRecenzent = isRecenzent;
+	}
+	
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(String isAdmin) {
+		this.isPrelegent = isAdmin;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+

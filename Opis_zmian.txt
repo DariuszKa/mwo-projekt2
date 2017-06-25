@@ -1,0 +1,15 @@
+Zmiany:
+student* -> user*
+school -> conference
+
+dzia³a "Logout"
+
+W koñcu dzia³aj¹ w ró¿ny sposób zak³adki U¿ytkownicy, Prelegenci, Recenzenci
+
+dodane pola login, has³o
+
+Predefiniowani u¿ytkownicy
+
+Wiele parametrów u¿ytkownika
+
+Jeszcze wiêcej parametrów, o dziwo dzia³a

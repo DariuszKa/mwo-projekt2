@@ -1,0 +1,66 @@
+package pl.edu.agh.ki.mwo.web.controllers;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import pl.edu.agh.ki.mwo.model.User;
+import pl.edu.agh.ki.mwo.persistence.UserDatabase;
+
+@Controller
+public class UsersController {
+
+    @RequestMapping(value="/Users")
+    public String listUsers(Model model, HttpSession session) 
+    {    		
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    	
+        return "usersList";    
+    }
+    
+    @RequestMapping(value="/AddUser")
+    public String displayAddUserForm(Model model, HttpSession session) 
+    {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+        return "userForm";    
+    }
+
+    @RequestMapping(value="/CreateUser", method=RequestMethod.POST)
+    public String createUser(@RequestParam(value="userName", required=false) String name,
+    		@RequestParam(value="userSurname", required=false) String surname,
+    		@RequestParam(value="userSex", required=false) String sex,
+    		@RequestParam(value="userAge", required=false) String age,
+    		Model model, HttpSession session) 
+    {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	if(Integer.parseInt(age)<=18){
+    		model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za młody! Nowy użytkownik nie został dodany");
+    		return "userList";
+    	}
+
+    	if(Integer.parseInt(age)>=100){
+    		model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za stary! Nowy użytkownik nie został dodany");
+    		return "userList";
+    	}
+    	
+    	UsersDatabase.getInstance().addUser(new User(name, surname, sex.equals("female"), age));    	
+       	model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    	model.addAttribute("message", "Nowy użytkownik został dodany");
+    	return "userList";
+    }
+
+
+}

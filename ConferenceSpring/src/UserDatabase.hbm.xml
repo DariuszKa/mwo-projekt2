@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="UserDatabase" table="users">
+	<id name="id" column="id" type="long">
+		<generator class="native"></generator>
+	</id>
+	
+	<property name="login" column="login" type="string"></property>
+	<property name="firstName" column="firstName" type="string"></property>
+	<property name="lastName" column="lastName" type="string"></property>
+	<property name="lastName" column="sex" type="string"></property>
+	<property name="year" column="year" type="integer"></property>
+	<property name="month" column="month" type="integer"></property>
+	<property name="day" column="day" type="integer"></property>
+	<property name="university" column="university" type="string"></property>
+	<property name="domain" column="domain" type="string"></property>
+	<property name="email" column="email" type="string"></property>
+	<property name="address" column="address" type="string"></property>
+	<property name="telephone" column="telephone" type="string"></property>
+	<property name="isPrelegent" column="isPrelegent" type="integer"></property>
+	<property name="isRecenzent" column="isRecenzent" type="integer"></property>
+	<property name="isAdmin" column="isAdmin" type="integer"></property>
+	<property name="password" column="password" type="string"></property>
+	
+</class>
+</hibernate-mapping>

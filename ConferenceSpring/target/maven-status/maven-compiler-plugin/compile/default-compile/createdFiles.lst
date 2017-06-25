@@ -1,0 +1,5 @@
+pl\edu\agh\ki\mwo\web\controllers\UserController.class
+pl\edu\agh\ki\mwo\model\User.class
+pl\edu\agh\ki\mwo\web\controllers\LoginController.class
+pl\edu\agh\ki\mwo\persistence\UserDatabase.class
+pl\edu\agh\ki\mwo\web\app\Application.class

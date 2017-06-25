@@ -1,0 +1,23 @@
+<table width="98%" cellpadding="4" cellspacing="1" bgcolor="dad1d0" style="BORDER: RGB(137,155,175) 1px solid;">
+	<tr>
+		
+		<td th:if="${session.isAdmin}" align='center'>
+			<a href="Users">Admin panel</a>
+		</td>
+		<td align='center'>
+			<a href="Prelegents">Prelegenci</a>
+		</td>
+		<td th:if="${session.isRecenzent} OR ${session.isAdmin}" align='center'>
+			<a href="Recenzents">Recenzenci</a>
+		</td>
+		<td align='center'>
+			<a href="">Tytuły prezentacji</a>
+		</td>
+		<td align='center'>
+			<a href="">Tematyka zagadnienia</a>
+		</td>
+		<td align='center'>
+			<a href="Logout">Wyloguj</a>
+		</td>
+	</tr>
+</table>

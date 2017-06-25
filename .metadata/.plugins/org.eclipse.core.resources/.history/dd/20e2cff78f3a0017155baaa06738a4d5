@@ -1,0 +1,215 @@
+package pl.edu.agh.ki.mwo.web.controllers;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import pl.edu.agh.ki.mwo.persistence.UserDatabase;
+
+@Controller
+public class UserController{
+
+    @RequestMapping(value="/Users")
+    public String listUsers(Model model, HttpSession session) 
+    {    		
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    	
+        return "listUsers";    
+    }
+    
+    @RequestMapping(value="/Prelegents")
+    public String listPrelegents(Model model, HttpSession session) 
+    {    		
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    	
+        return "listPrelegents";    
+    }
+    
+    @RequestMapping(value="/Recenzents")
+    public String listRecenzents(Model model, HttpSession session) 
+    {    		
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    	
+        return "listRecenzents";    
+    }
+    
+    @RequestMapping(value="/AddUser")
+    public String displayAddUserForm(Model model, HttpSession session) 
+    {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+        return "userForm";    
+    }
+
+    //@RequestMapping(value="/CreateUser", method=RequestMethod.POST)
+    @RequestMapping(value="/CreateUser", method=RequestMethod.POST)
+    public String createUser(
+    		@RequestParam(value="userLogin", required=true) String login,
+    		@RequestParam(value="userName", required=true) String firstName,
+    		@RequestParam(value="userSurname", required=true) String lastName,
+    		@RequestParam(value="userSex", required=false) String sex,
+    		@RequestParam(value="userYear", required=false) String yearStr,
+    		@RequestParam(value="userMonth", required=false) String monthStr,
+    		@RequestParam(value="userDay", required=false) String dayStr,
+    		@RequestParam(value="userUniversity", required=false) String university,
+    		@RequestParam(value="userDomain", required=false) String domain,
+    		@RequestParam(value="userEmail", required=false) String email,
+    		@RequestParam(value="userAddress", required=false) String address,
+    		@RequestParam(value="userTelephone", required=false) String telephone,
+    		@RequestParam(value="userPrelegent", required=false) String prelegent,
+    		@RequestParam(value="userRecenzent", required=false) String recenzent,
+    		@RequestParam(value="userAdministrator", required=false) String admin,
+    		@RequestParam(value="userPassword1", required=true) String password,
+    		@RequestParam(value="userPassword2", required=true) String password2,
+    		Model model, HttpSession session) 
+    {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	if(UserDatabase.getInstance().hasUser(login)){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Wybierz inny login! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	if(login.length()<3){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za krótki login! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	if(login.length()>20){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za długi login! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	
+    	if(firstName.length()<2){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za krótkie imię! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	if(firstName.length()>40){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za długie imię! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    		
+    	if(lastName.length()<2){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za krótkie nazwisko! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	if(lastName.length()>60){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za długie nazwisko! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	
+    	if(!prelegent.equals("yes") && !prelegent.equals("no")){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Nie określono czy jest prelegentem! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	
+    	if(recenzent.equals("yes") && recenzent.equals("no")){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Nie określono czy jest recenzentem! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	
+    	if(admin.equals("yes") && admin.equals("no")){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Nie określono czy jest administratorem! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	
+    	int year = -1;
+    	try{
+    		year = Integer.parseInt(yearStr);
+    	} catch(Exception e){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Wrong age! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	
+    	int age = new GregorianCalendar().get(Calendar.YEAR) - year;
+    	if(age<18){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za młody! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+    	if(age>100){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za stary! Nowy użytkownik nie został dodany");
+    		return "listUsers";
+    	}
+
+    	int month = -1;
+    	try{
+    		month = Integer.parseInt(monthStr);
+    	} catch(Exception e){
+			model.addAttribute("message", "Wrong month - use numeric values between 1 and 12! Nowy użytkownik nie został dodany");
+			return "listUsers";
+		}
+    	if(month<1 || month>12){
+    		model.addAttribute("message", "Wrong month - use number between 1 and 12! Nowy użytkownik nie został dodany");
+			return "listUsers";
+    	}
+    	
+    	int day = -1;
+    	try{
+    		day = Integer.parseInt(monthStr);
+    	} catch(Exception e){
+			model.addAttribute("message", "Wrong day - use numeric values between 1 and 31! Nowy użytkownik nie został dodany");
+			return "listUsers";
+		}
+    	if(day<1 || day>31){
+    		model.addAttribute("message", "Wrong day - use number between 1 and 31! Nowy użytkownik nie został dodany");
+			return "listUsers";
+    	}
+    	
+    	if(password.length()<5){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za krótkie hasło! Wymagane co najmniej 5 znaków");
+    		return "listUsers";
+    	}
+    	if(password.length()>20){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Za długie hasło! Dopuszczone maksimum 20 znaków");
+    		return "listUsers";
+    	}
+    	if(!password.equals(password2)){
+    		//model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    		model.addAttribute("message", "Wpisano różne hasła! Spróbuj ponownie");
+    		return "listUsers";
+    	}
+    	
+    	//UserDatabase.getInstance().addUser(new User(login, firstName, lastName, sex, age, prelegent, recenzent, admin, password1));
+    	//User(String login, String firstName, String lastName, String sex, int age, boolean isPrelegent, boolean isRecenzent, boolean isAdmin, String password)
+    	System.out.println("UserController login='" + login + "' firstName='" + firstName + "' lastName='" + lastName + "' sex='" + sex + "' age=" + age + " university='" + university + "' domain='" + domain + "' e-mail='" + email + "' prelegent=" + prelegent.equals("yes") + " recenzent=" + recenzent.equals("yes") + " admin=" + admin.equals("yes"));
+    	UserDatabase.getInstance().addUser(login, firstName, lastName, sex, year, month, day, university, domain, email, address, telephone, (prelegent.equals("yes")), (recenzent.equals("yes")), (admin.equals("yes")), password);
+       	model.addAttribute("users", UserDatabase.getInstance().getUsers());
+    	model.addAttribute("message", "Sukces! Nowy użytkownik został dodany");
+    	session.setAttribute("userCount", UserDatabase.getInstance().getUserCount());
+    	return "listUsers";
+    	
+    }
+
+
+}

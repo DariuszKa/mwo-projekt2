@@ -1,0 +1,108 @@
+package pl.edu.agh.ki.mwo.model;
+
+import pl.edu.agh.ki.mwo.persistence.UserDatabase;
+
+public class User {
+	private static int userIdGenerator = 1;
+	protected int id;
+	protected String login;
+	protected String firstName;
+	protected String lastName;
+	protected String sex;
+	protected String age;
+	protected boolean isPrelegent;
+	protected boolean isRecenzent;
+	protected boolean isAdmin;
+	private String password;
+	
+	public User(String login, String firstName, String lastName, String sex, String age, boolean isPrelegent, boolean isRecenzent, boolean isAdmin, String password) {
+		if(UserDatabase.getInstance().hasUser(login)){
+			//System.out.println("User '" + login + "' not created! User just exists in the database!");
+			throw new IllegalStateException();
+		}
+		else{
+			//super();
+			this.id = userIdGenerator;
+			userIdGenerator++;
+			this.login = login;
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.sex = sex;
+			this.age = age;
+			this.isPrelegent = isPrelegent;
+			this.isRecenzent = isRecenzent;
+			this.isAdmin = isAdmin;
+			this.password = password;
+		}
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	
+	public String getName() {
+		return firstName;
+	}
+	public void setName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getSurname() {
+		return lastName;
+	}
+	public void setSurname(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public boolean getIsPrelegent() {
+		return isPrelegent;
+	}
+	public void setIsPrelegent(boolean isPrelegent) {
+		this.isPrelegent = isPrelegent;
+	}
+	
+	public boolean getIsRecenzent() {
+		return isRecenzent;
+	}
+	public void setIsRecenzent(boolean isRecenzent) {
+		this.isRecenzent = isRecenzent;
+	}
+	
+	public boolean getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	
+	public boolean getLoginPassCorrect(String login, String password){
+		if(this.login.equals(login)) if(this.password.equals(password)) return true;
+		return false;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+

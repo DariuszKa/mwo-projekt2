@@ -1,0 +1,85 @@
+package pl.edu.agh.ki.mwo.web.controllers;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.sun.jmx.snmp.UserAcl;
+
+import pl.edu.agh.ki.mwo.model.User;
+import pl.edu.agh.ki.mwo.persistence.UserDatabase;
+
+@Controller
+public class LoginController {
+
+	@RequestMapping(value={"/", "/Login"}, method=RequestMethod.GET)
+	public String displayLoginForm() 
+	   {
+	        return "loginForm";
+	   }
+
+    @RequestMapping(value="/Login", method=RequestMethod.POST)
+    public String doLogin(@RequestParam(value="login") String login, String pass, Model model, HttpSession session) 
+    {
+		UserDatabase.getInstance().addUser("AnWie17", "Antoni", "Wieretelny", "male", 77, false, false, false, "wiara");
+		
+		UserDatabase.getInstance().addUser("AnSta22", "Anna", "Stańczyk", "female", 22, true, false, false, "radość");
+		UserDatabase.getInstance().addUser("CzPrz36", "Czesław", "Przywra", "male", 66, true, false, false, "destrukcja");
+		UserDatabase.getInstance().addUser("HeTra48", "Hermeneutyk", "Trapiński", "male", 88, true, false, false, "zmęczenie");
+		UserDatabase.getInstance().addUser("KaSla54", "Katarzyna", "Slajdowska", "female", 44, true, false, false, "outlook");
+		UserDatabase.getInstance().addUser("AnGwi63", "Andrzej", "Gwiazda", "male", 33, true, false, false, "oślepienie");
+		
+		UserDatabase.getInstance().addUser("tadek", "Tadeusz", "Żebro", "male", 50, false, false, true, "słowa");
+		UserDatabase.getInstance().addUser("admin", "Adminisław", "Adminowski", "other", 60, false, false, true, "admin");
+		UserDatabase.getInstance().addUser("beatka", "Beata", "Wcisło", "male", 40, false, false, true, "nadzieja");
+		
+		UserDatabase.getInstance().addUser("GrzLe96", "Grzegorz", "Lektor", "male", 65, false, true, false, "czytanie");
+		UserDatabase.getInstance().addUser("BeWci04", "Beata", "Błyskawica", "female", 45, false, true, false, "szybkość");
+		UserDatabase.getInstance().addUser("ZeArt13", "Zenon", "Artkowski", "male", 35, false, true, false, "sztuka");
+		UserDatabase.getInstance().addUser("JeRom22", "Jerzy", "Romantyk", "male", 25, false, true, false, "serce");
+		
+		UserDatabase.getInstance().addUser("artek", "Arthur", "Omnibus", "male", 32, true, true, true, "wiedza");
+		UserDatabase.getInstance().addUser("jarek", "Jarosław", "Naczelny", "other", 62, true, true, true, "potęga");
+		
+		UserDatabase.getInstance().addUser("g0", "Arthur", "Omnibus", "male", 39, true, true, true, "infinity");
+		UserDatabase.getInstance().addUser("jarek0", "0", "Naczelny", "male", 69, true, true, true, "power");
+		UserDatabase.getInstance().addUser("JeRom00", "Jerzy", "R", "male", 29, false, true, false, "force");
+		UserDatabase.getInstance().addUser("Mar00", "Martyneliusz", "Jędrak", "female", 39, true, true, true, "pot");
+		UserDatabase.getInstance().addUser("Han0", "Hania", "Piskorz", "", 29, true, true, true, "fishes");
+    	
+    	//if(login.equals("admin") && pass.equals("admin")){
+    	if(UserDatabase.getInstance().loginCorrect(login, pass)){
+    		session.setAttribute("userLogin", login);
+    		session.setAttribute("loggedIn", UserDatabase.getInstance().loginCorrect(login, pass));
+    		session.setAttribute("userCount", UserDatabase.getInstance().getUserCount());
+    		session.setAttribute("isPrelegent", UserDatabase.getInstance().getCurrentUserIsPrelegent());
+    		session.setAttribute("isRecenzent", UserDatabase.getInstance().getCurrentUserIsRecenzent());
+    		session.setAttribute("isAdmin", UserDatabase.getInstance().getCurrentUserIsAdministrator());
+    		return "redirect:/Welcome";
+    	}
+    	
+    	else
+    		return "redirect:/Login";
+    }
+    
+    @RequestMapping(value="/Logout")
+    public String doLogout(Model model, HttpSession session) {
+    	session.removeAttribute("userLogin");
+    	session.removeAttribute("loggedIn");
+    	session.removeAttribute("isPrelegent");
+    	session.removeAttribute("isRecenzent");
+    	session.removeAttribute("isAdmin");
+    	return "redirect:/Login";
+    }
+
+    @RequestMapping(value="/Welcome")
+    public String welcome(Model model, HttpSession session) 
+    {
+    	model.addAttribute("message", "Witamy w systemie Konferencja+ wersja 0.1");
+        return "welcome";
+    }
+}

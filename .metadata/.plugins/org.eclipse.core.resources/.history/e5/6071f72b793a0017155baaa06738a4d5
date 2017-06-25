@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<body>
+
+
+
+    <span layout:fragment="pageTitle"> - Recenzenci </span>
+
+    <div layout:fragment="content">
+    	<div th:include="menuFragment" ></div>
+		<br/><Br/>
+		<table border="1" cellpadding="5">
+			<tr><th>Id</th><th>Imię</th><th>Nazwisko</th><th>Uniwersytet</th><th>Dziedzina</th></tr>
+			
+			<tr th:each="user: ${users}"
+				th:if="${user.isRecenzent}">
+					<td><span th:text="${user.id}" /></td>
+					<td><span th:text="${user.firstName}" /></td>
+					<td><span th:text="${user.lastName}" /></td>
+					<td><span th:text="${user.university}" /></td>
+					<td><span th:text="${user.domain}" /></td>
+					<!--  <td><span th:text="${user.sex}" /></td>
+					<td><span th:text="${user.age}" /></td>
+					<td><span th:text="${user.isPrelegent?'TAK':'-'}" /></td>
+					<td><span th:text="${user.isRecenzent?'TAK':'-'}" /></td> -->
+			</tr>
+			
+		</table><br/>
+		
+    </div>
+
+</body>
+</html>

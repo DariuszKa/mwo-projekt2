@@ -1,0 +1,3 @@
+1495149339921	Infer generic type arguments
+1495257384724	Move 'hibernate.cfg.xml' to 'src'
+1495257420662	Move 'UserDatabase.hbm.xml' to 'src'

@@ -1,0 +1,89 @@
+package pl.edu.agh.ki.mwo.model;
+
+public class User {
+	private static int userIdGenerator = 1;
+	protected int id;
+	protected String name;
+	protected String surname;
+	protected String sex;
+	protected String age;
+	protected String isPrelegent;
+	protected String isRecenzent;
+	protected String isAdmin;
+	protected String password;
+	
+	public User(String name, String surname, String sex, String age, String isPrelegent, String isRecenzent, String isAdmin, String password) {
+		super();
+		this.id = userIdGenerator;
+		userIdGenerator++;
+		this.name = name;
+		this.surname = surname;
+		this.sex = sex;
+		this.age = age;
+		this.isPrelegent = isPrelegent;
+		this.isRecenzent = isRecenzent;
+		this.isAdmin = isAdmin;
+		this.password = password;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getIsPrelegent() {
+		return isPrelegent;
+	}
+	public void setIsPrelegent(String isPrelegent) {
+		this.isPrelegent = isPrelegent;
+	}
+	
+	public String getIsRecenzent() {
+		return isRecenzent;
+	}
+	public void setIsRecenzent(String isRecenzent) {
+		this.isRecenzent = isRecenzent;
+	}
+	
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(String isAdmin) {
+		this.isPrelegent = isAdmin;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+

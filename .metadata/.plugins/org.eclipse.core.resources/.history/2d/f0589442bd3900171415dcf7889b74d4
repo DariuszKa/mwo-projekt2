@@ -1,0 +1,106 @@
+package pl.edu.agh.ki.mwo.persistence;
+
+import java.util.ArrayList;
+
+import pl.edu.agh.ki.mwo.model.User;
+
+public class UserDatabase{
+	
+	protected static UserDatabase userDatabase = null;
+	
+	public static UserDatabase getInstance()
+	{
+		if (userDatabase == null)
+		{
+			userDatabase = new UserDatabase();
+		}
+		return userDatabase;
+	}
+
+	protected User currentUser = null;
+	
+	protected boolean currentUserIsPrelegent = false;
+	
+	protected boolean currentUserIsRecenzent = false;
+	
+	protected boolean currentUserIsAdministrator = false;
+	
+	protected ArrayList<User> users = null;
+	
+	protected UserDatabase()
+	{
+		users = new ArrayList<User>();
+	}
+
+	public Iterable<User> getUsers() {
+		return users;
+	}
+
+	//public void addUser(User user) {
+	public void addUser(String login, String firstName, String lastName, String sex, int age, boolean isPrelegent, boolean isRecenzent, boolean isAdmin, String password){
+		//String login = user.getLogin();
+		if(!UserDatabase.getInstance().hasUser(login))
+			if(!(login.length()<3))
+				if(!(login.length()>10))
+					if(!(firstName.length()<2))
+						if(!(firstName.length()>40))
+							if(!(lastName.length()<2))
+								if(!(lastName.length()>60))
+									if(!(age<18))
+										if(!(age>100))
+											if(!(password.length()<5))
+												if(!(password.length()>20))
+													new User(login, firstName, lastName, sex, age, isPrelegent, isRecenzent, isAdmin, password);
+	}
+	
+	public void removeUser(int userId) {
+		for(User user : users)
+		{
+			if (user.getId() == userId)
+			{
+				users.remove(user);
+				return;
+			}
+		}
+	}
+	
+	public boolean hasUser(String login){
+		for(User user: users){
+			if(user.getLogin().equals(login)) return true;
+		}
+		return false;
+	}
+	
+	public boolean loginCorrect(String login, String password){
+		for(User user: users){
+			if(user.getLoginPassCorrect(login, password)) {
+					currentUser = user;
+					currentUserIsPrelegent = currentUser.getIsPrelegent();
+					currentUserIsRecenzent = currentUser.getIsRecenzent();
+					currentUserIsAdministrator = currentUser.getIsAdmin();
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	public User getCurrentUser(){
+		return currentUser;
+	}
+	
+	public boolean getCurrentUserIsPrelegent(){
+		return currentUser.getIsPrelegent();
+	}
+	
+	public boolean getCurrentUserIsRecenzent(){
+		return currentUser.getIsRecenzent();
+	}
+	                 
+	public boolean getCurrentUserIsAdministrator(){
+		return currentUserIsAdministrator;
+	}
+	
+	public int getUserCount(){
+		return users.size();
+	}
+}

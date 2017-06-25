@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<body>
+
+    <div layout:fragment="content">
+    <div th:include="menuFragment" ></div>
+    	<br/><br/>
+	   			<form action="CreateUser" method="POST">
+					<table>
+						<tr><td>imię:</td><td><input type="text" name="userName"  /></td></tr>
+						<tr><td>nazwisko:</td><td><input type="text" name="userSurname"  /></td></tr>
+						<tr><td>płeć:</td><td><input type="radio" name="userSex" value="female"  />♀ <br/>	
+								<input type="radio" name="userSex" value="male"  />♂</td></tr>
+						<tr><td>wiek:</td><td><input type="text" name="userAge"  /></td></tr>
+						<tr><td>prelegent:</td><td><input type="radio" name="userPrelegent" value="yes"  />tak<br/>	
+								<input type="radio" name="userPrelegent" value="no"  />nie</td></tr>
+						<tr><td>recenzent:</td><td><input type="radio" name="userRecenzent" value="yes"  />tak<br/>	
+								<input type="radio" name="userRecenzent" value="no"  />nie</td></tr>
+						<tr><td>administrator:</td><td><input type="radio" name="userAdministrator" value="yes"  />tak<br/>	
+								<input type="radio" name="userAdministrator" value="no"  />nie</td></tr>
+						<tr><td>hasło:</td><td><input type="text" name="userPassword1"  /></td></tr>
+						<tr><td>powtórz hasło:</td><td><input type="password" name="userPassword2"  /></td></tr>
+					</table>
+					<input type="submit" value="Dodaj użytkownika"/>
+				</form>
+		<br/><BR/>
+    </div>
+
+</body>
+</html>
+
+

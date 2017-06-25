@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<body>
+
+    <div layout:fragment="content">
+    <div th:include="menuFragment" ></div>
+    	<br/><br/>
+	   			<form action="CreateUser" method="POST">
+					<table>
+						<tr><td>login:</td><td><input type="text" name="userLogin"  /></td></tr>
+						<tr><td>imię:</td><td><input type="text" name="userName"  /></td></tr>
+						<tr><td>nazwisko:</td><td><input type="text" name="userSurname"  /></td></tr>
+						<tr><td>płeć:</td><td><input type="radio" name="userSex" value="female"  />♀ <br/>	
+								<input type="radio" name="userSex" value="male"  />♂</td></tr>
+						<tr><td>rok ur:</td><td><input type="text" name="userYear"  /></td></tr>
+						<tr><td>miesiąc ur:</td><td><input type="text" name="userMonth"  /></td></tr>
+						<tr><td>dzień ur:</td><td><input type="text" name="userDay"  /></td></tr>
+						<tr><td>uczelnia:</td><td><input type="text" name="userUniversity"  /></td></tr>
+						<tr><td>specjalizacja:</td><td><input type="text" name="userDomain"  /></td></tr>
+						<tr><td>e-mail:</td><td><input type="text" name="userEmail"  /></td></tr>
+						<tr><td>adres:</td><td><input type="text" name="userAddress"  /></td></tr>
+						<tr><td>prelegent:</td><td><input type="radio" name="userPrelegent" value="yes"  />tak<br/>	
+								<input type="radio" name="userPrelegent" value="no"  />nie</td></tr>
+						<tr><td>recenzent:</td><td><input type="radio" name="userRecenzent" value="yes"  />tak<br/>	
+								<input type="radio" name="userRecenzent" value="no"  />nie</td></tr>
+						<tr><td>administrator:</td><td><input type="radio" name="userAdministrator" value="yes"  />tak<br/>	
+								<input type="radio" name="userAdministrator" value="no"  />nie</td></tr>
+						<tr><td>hasło:</td><td><input type="password" name="userPassword1"  /></td></tr>
+						<tr><td>powtórz hasło:</td><td><input type="password" name="userPassword2"  /></td></tr>
+					</table>
+					<input type="submit" value="Dodaj użytkownika"/>
+				</form>
+		<br/><BR/>
+    </div>
+
+</body>
+</html>
+
+
